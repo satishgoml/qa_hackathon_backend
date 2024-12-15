@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        INSTALL_DEV: 'false'
+    ports:
+      - "8000:80"
+    environment:
+      - PYTHONPATH=/app
+    env_file:
+      - ./.env
+    volumes:
+      - ./app:/app/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 80 --reload
+
+volumes:
+  postgres_data:
